@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Kosmiczny Kurier 3D</title>
+<meta name="description" content="Arcade w kosmosie: leć statkiem, zbieraj paczki, unikaj asteroid. Steruj jednym palcem.">
+<meta property="og:title" content="Kosmiczny Kurier 3D"><meta property="og:description" content="Dostarcz paczki przez pole asteroid. Jeden palec, zero zasad.">
+<meta name="theme-color" content="#05060f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='52'%3E🚀%3C/text%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#05060f;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#fff;touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{display:block;position:fixed;inset:0}
+#hud{position:fixed;inset:0;pointer-events:none;padding:max(12px,env(safe-area-inset-top)) 14px 0}
+#hud .row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.pill{background:#0a1030cc;border:2px solid #7fe7ff55;border-radius:18px;padding:8px 16px;font-weight:800;backdrop-filter:blur(6px)}
+#score{font-size:clamp(26px,7vw,44px);line-height:1;color:#ffe066;text-shadow:0 0 18px #ffb300aa}
+#sub{font-size:clamp(13px,3.4vw,18px);opacity:.85;margin-top:4px}
+#lives{font-size:clamp(24px,6vw,34px);letter-spacing:3px}
+#combo{position:fixed;left:50%;top:22%;transform:translateX(-50%);font-size:clamp(28px,9vw,60px);font-weight:900;color:#7fe7ff;text-shadow:0 0 24px #00b7ff;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+#boostbar{position:fixed;left:14px;right:14px;bottom:max(14px,env(safe-area-inset-bottom));height:12px;background:#ffffff22;border-radius:8px;overflow:hidden}
+#boostbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#00c6ff,#7fe7ff);transition:width .1s}
+.scr{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;background:radial-gradient(#0b1240cc,#02030acc);z-index:5}
+.scr.hide{display:none}
+h1{margin:0;font-size:clamp(36px,11vw,84px);line-height:1;letter-spacing:-1px;background:linear-gradient(#fff,#7fe7ff 60%,#3a7bff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px #3a7bff88)}
+p{margin:0;max-width:520px;font-size:clamp(16px,4.3vw,21px);line-height:1.4;opacity:.92}
+button{pointer-events:auto;min-height:64px;min-width:240px;font:800 clamp(20px,5.5vw,28px) inherit;font-family:inherit;color:#05102a;background:linear-gradient(#ffe066,#ffb300);border:0;border-radius:22px;padding:14px 34px;box-shadow:0 8px 0 #b37a00,0 14px 30px #ffb30055;cursor:pointer}
+button:active{transform:translateY(5px);box-shadow:0 3px 0 #b37a00}
+.big{font-size:clamp(46px,14vw,96px);font-weight:900;color:#ffe066;text-shadow:0 0 30px #ffb300}
+.keys{opacity:.7;font-size:15px}
+#ai{position:fixed;left:0;right:0;bottom:0;z-index:9;font-size:11px;text-align:center;padding:3px 8px;background:#000a;color:#bcd;pointer-events:none}
+#flash{position:fixed;inset:0;background:#ff2a2a;opacity:0;pointer-events:none;transition:opacity .35s;z-index:3}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="flash"></div>
+<div id="hud"><div class="row">
+  <div class="pill"><div id="score">0</div><div id="sub">📦 0 · ⚡ 0 km/s</div></div>
+  <div class="pill" id="lives">❤❤❤</div></div></div>
+<div id="combo"></div>
+<div id="boostbar"><i></i></div>
+<div class="scr" id="start">
+  <h1>KOSMICZNY<br>KURIER 3D</h1>
+  <p>Leć przez pole asteroid. <b>Zbieraj złote paczki 📦</b>, wlatuj w niebieskie pierścienie na <b>turbo ⚡</b> i nie rozbij statku!</p>
+  <button id="go">▶ START</button>
+  <div class="keys">Telefon: przeciągaj palcem · Komputer: strzałki / WASD / mysz · Spacja = turbo</div>
+</div>
+<div class="scr hide" id="over">
+  <div>KONIEC TRASY</div><div class="big" id="fs">0</div>
+  <p id="fd"></p>
+  <button id="again">↻ JESZCZE RAZ</button>
+</div>
+<div id="ai">Strona prowadzona w 100% przez agenta AI — treści i gra mogą zawierać błędy. · AI Evolution Polska</div>
+<script type="importmap">{"imports":{"three":"./vendor/three.min.js"}}</script>
+<script type="module" src="game.js"></script>
+</body></html>
