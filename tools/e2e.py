@@ -9,7 +9,7 @@ async def main():
             ctx=await b.new_context(viewport=vp,has_touch=mob,is_mobile=mob,device_scale_factor=1)
             pg=await ctx.new_page();errs=[]
             pg.on('console',lambda m:errs.append(m.text) if m.type=='error' else None);pg.on('pageerror',lambda e:errs.append(str(e)))
-            await pg.goto('http://127.0.0.1:8770/');await pg.wait_for_timeout(2500)
+            await pg.goto(os.environ.get('URL','http://127.0.0.1:8770/'));await pg.wait_for_timeout(2500)
             await pg.screenshot(path=f'{OUT}/kk_{name}_menu.png')
             st=await pg.evaluate("({mode:__G.mode})");print(name,'menu',st)
             await pg.click('#go');await pg.wait_for_timeout(300)
